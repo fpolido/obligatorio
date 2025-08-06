@@ -1,0 +1,45 @@
+---
+- hosts: ubuntu
+  user: sysadmin
+  become: yes
+
+  tasks:
+    - name: Actualizar todos los paquetes
+      apt:
+        update_cache: yes
+        upgrade: dist
+      notify: Reiniciar el sistema
+
+    - name: Permitir SSH (puerto 22)
+      community.general.ufw:
+        rule: allow
+        port: 22
+        proto: tcp
+
+    - name: Habilitar UFW y denegar todo por defecto
+      community.general.ufw:
+        state: enabled
+        policy: deny
+   
+    - name: Aplico medidas de seguridad a SSH
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "{{ item.abuscar }}"
+        line: "{{ item.reemplazo }}"
+      loop:
+        - { abuscar: '#PermitRootLogin', reemplazo: 'PermitRootLogin no' }
+        - { abuscar: '#AuthenticationMethods', reemplazo: 'AuthenticationMethods publickey' }
+        - { abuscar: '#PubkeyAuthentication', reemplazo: 'PubkeyAuthentication yes' }
+      notify: Reinicio SSH
+
+  handlers:
+
+    - name: Reiniciar el sistema
+      reboot:
+        reboot_timeout: 600
+ 
+    - name: Reinicio SSH
+      service:
+        name: ssh
+        state: restarted
+...
