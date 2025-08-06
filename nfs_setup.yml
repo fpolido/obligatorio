@@ -38,6 +38,8 @@
       notify: Recargar exports
 
   handlers:
-    - name: Recargar exports
-      command: exportfs -r
+    - name: Recargar NFS
+      ansible.builtin.service:
+        name: nfs-server
+        state: restarted
 ...
