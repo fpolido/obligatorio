@@ -32,6 +32,17 @@
         - { abuscar: '#PubkeyAuthentication', reemplazo: 'PubkeyAuthentication yes' }
       notify: Reinicio SSH
 
+    - name: Instalar fail2ban
+      apt:
+        name: fail2ban
+        state: present
+
+    - name: Asegurar que fail2ban esté iniciado y habilitado
+      ansible.builtin.service:
+        name: fail2ban
+        state: started
+        enabled: true
+
   handlers:
 
     - name: Reiniciar el sistema
