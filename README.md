@@ -26,14 +26,14 @@ Configura un servidor NFS en sistemas CentOS de la siguiente manera:
   - Abre el puerto 2049/tcp en el firewall (firewalld)
   - Crea el directorio /var/nfs_shared con permisos 0777
   - Añade una entrada en /etc/exports para compartir el directorio-
-  - Reinicia el servicio NFS si hay cambios
+          - Reinicia el servicio NFS si hay cambios
 
 ## hardening.yml
 
 Aplica medidas de hardening a servidores Ubuntu de la siguiente manera:
 
   - Actualiza todos los paquetes del sistema
-  -       - Reinicia el sistema si es necesario
+          - Reinicia el sistema si es necesario
   - Configura el firewall ufw para:
           - permitir SSH (puerto 22)
           - negar todo lo demás por defecto
