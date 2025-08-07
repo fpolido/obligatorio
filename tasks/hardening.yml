@@ -2,6 +2,7 @@
 - hosts: ubuntu
   user: sysadmin
   become: yes
+  gather_facts: false
 
   tasks:
     - name: Actualizar todos los paquetes
