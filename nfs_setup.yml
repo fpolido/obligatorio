@@ -16,12 +16,38 @@
         state: started
         enabled: yes
 
+    - name: Asegurar que el servicio rpc esté iniciado y habilitado
+      ansible.builtin.service:
+        name: rpcbind
+        state: started
+        enabled: yes
+
+    - name: Permitir puerto 111/tcp en el firewall
+      ansible.posix.firewalld:
+        port: 111/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+
     - name: Permitir puerto 2049/tcp en el firewall
       ansible.posix.firewalld:
         port: 2049/tcp
         permanent: yes
         state: enabled
         immediate: yes
+
+    - name: Permitir puerto 13025/tcp en el firewall
+      ansible.posix.firewalld:
+        port: 13025/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+
+    - name: Configurar puerto para mountd en /etc/nfs.conf
+      ansible.builtin.lineinfile:
+        path: /etc/nfs.conf
+        regexp: '#port=0'
+        line: 'port=13025'
 
     - name: Crear el directorio /var/nfs_shared con owner y permisos
       ansible.builtin.file:
