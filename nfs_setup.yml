@@ -46,7 +46,8 @@
     - name: Configurar puerto para mountd en /etc/nfs.conf
       ansible.builtin.lineinfile:
         path: /etc/nfs.conf
-        regexp: '#port=0'
+        insertafter: '\[mountd\]'
+        regexp: '^#?port='
         line: 'port=13025'
 
     - name: Crear el directorio /var/nfs_shared con owner y permisos
