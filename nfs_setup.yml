@@ -22,23 +22,23 @@
         state: started
         enabled: yes
 
-    - name: Permitir puerto 111/tcp en el firewall
+    - name: Permitir servicio de NFS en el firewall
       ansible.posix.firewalld:
-        port: 111/tcp
+        service: nfs
         permanent: yes
         state: enabled
         immediate: yes
 
-    - name: Permitir puerto 2049/tcp en el firewall
+    - name: Permitir servicio rpc-bind en el firewall
       ansible.posix.firewalld:
-        port: 2049/tcp
+        service: rpc-bind
         permanent: yes
         state: enabled
         immediate: yes
 
-    - name: Permitir puerto 13025/tcp en el firewall
+    - name: Permitir servicio mountd en el firewall
       ansible.posix.firewalld:
-        port: 13025/tcp
+        service: mountd
         permanent: yes
         state: enabled
         immediate: yes
